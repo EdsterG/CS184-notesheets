@@ -261,18 +261,17 @@ We have total internal when $\sin(\theta_t) > 1$\\
 {\bf Distributed Ray Tracer}: Use multiple rays for reflection and refraction, quasi-random directions, BRDF for weights\\
 {\bf Soft Shadows}: \\
 \includegraphics[scale=1.0]{images/softshadow}\\
-{\bf Ray -vs- Triangle Test}:\\
+{\bf Ray -vs- Sphere Test}:\\
 Implicit equation for sphere: $|X-C| ^ 2 - r^2  = 0$\\
 Combine with ray equation:\\
 $|r(t)-C| ^ 2 - r^2  = 0$\\
 $| A+tD-C| ^ 2 - r^2  = 0$\\
 \includegraphics[scale=1.0]{images/raycircle}\\
-{\bf Ray -vs- Sphere Test}:\\
-Implicit equation for sphere: $|X-C| ^ 2 - r^2  = 0$\\
+{\bf Ray -vs- Triangle Test}:\\
+Implicit equation for sphere: $X(\beta, \gamma) = V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1)$\\
 Combine with ray equation:\\
-$X(\beta, \gamma) = V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1)$\\
 $ V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1) = A+tD$\\
-Solve for$ \beta, \gamma$, and t\\
+Solve for $\beta, \gamma$, and t\\
 3 equations 3 unknowns, Beware divide by near-zero, Check range\\
 \includegraphics[scale=1.0]{images/raytri}
 
