@@ -159,7 +159,7 @@ BRDF is frequency dependent.\\
 BRDF doesn't capture Subsurface Scattering (BSSRDF)\\
 %BRDF is the spatial variation capture by "the material"
 Approximate BRDF as sum of Ambient, Diffuse, and Specular components.\\
-Diffuse: matte (Lambertian) surface reflectance depends on cosine of angle between surface and light direction.\\
+Diffuse: matte/Lambertian/diffuse surface reflectance depends on cosine of angle between surface and light direction.\\
 Specular: Mirror-like reflection (Phone Illumination Model) depends on view direction. \(\hat{r}=-\hat{l}+2(\hat{n}^T\hat{l})\hat{n}\)\\
 ``Half-angle'' approximation: \(k_sI(\hat{h}^T\hat{n})^p\) where \(\hat{h}=\frac{\hat{l}+\hat{v}}{||\hat{l}+\hat{v}||}\)\\
 Ambient: Accounts for omnifirectional light.\\
@@ -172,8 +172,8 @@ Metal specular reflects its color, plastic specular reflects as white.\\
 {\bf Directional Light}: Constant direction (point light at infinity)\\
 {\bf Falloff}: \(1/r^2\) looks bad. Use \(1/r\) instead\\
 {\bf Flat Shading}: Constant normal per triangle/polygon.\\
-{\bf Gouraud Shading}: Compute shading at each vertex. Type of smooth shading (where normals/colors are interpolated), fast, terrible for specular reflections.\\
-{\bf Phong Shading}: Compute shading at each pixel. Type of smooth shading, expensive.\\
+{\bf Gouraud Shading}: Compute shading at each vertex. Type of smooth shading, COLORS are interpolated, fast, terrible for specular reflections.\\
+{\bf Phong Shading}: Compute shading at each pixel. Type of smooth shading, NORMALS are interpolated, expensive.\\
 \includegraphics[scale=0.4]{images/shading}\\
 
 \subsection*{Transformations}
@@ -206,8 +206,15 @@ R_y =
 \(R_z = 
 \begin{bmatrix}
 \cos(\theta) & -\sin(\theta) & 0 \\
-\sin(\theta) & \cos(\theta) & 0\\
+\sin(\theta) & \cos(\theta) & 0 \\
 0 & 0 & 1
+\end{bmatrix}
+\)\(Shear = 
+\begin{bmatrix}
+1 & h_{xy} & h_{xz} & 0 \\
+h_{yx} & 1 & h_{yz} & 0 \\
+h_{zx} & h_{zy} & 1 & 0 \\
+0 & 0 & 0 & 1
 \end{bmatrix}
 \)\\
 {\bf Euler Angles}: Allow tumbling, Non-unique, Gimbal-lock, built from axis-aligned matricies \(R=R_zR_yR_x=rot(x,y,z)\)
@@ -234,26 +241,27 @@ Vectors as quat: \((\hat{v},0)\)\\
 Rotations as quat: \((\hat{r}\sin\frac{\theta}{2},\cos\frac{\theta}{2})\)\\
 Rotating a vector: \(x^{'}=q\cdot x\cdot q^{*}\)\\
 Composing rotations: \(q=q_1\cdot q_2\)\\
-{\bf Rotation Matricies}: One real eigenvalue, two complex eigenvalues, real axis is axis of rotation, \(\theta=cos^{-1}(\frac{Tr(R)-1}{2})\).
+{\bf Rotation Matricies}: One real eigenvalue, two complex eigenvalues, real eigenvector is axis of rotation, \(\theta=cos^{-1}(\frac{Tr(R)-1}{2})\).\\
+{\bf Cross Product}: \(a\times b = ||a||||b||\sin(\theta)n\)\\
+\(a\times(b+c)=(a\times b) + (a\times c\)\\
+\((ra)\times b = a\times(rb)=r(a\times b )\)\\
+\(a\times (b\times c)=b(a\cdot c) - c(a\cdot b)\)\\
 
+\subsection*{Acceleration Data Structures}
+{\bf Binary Space Partition Tree}: Split space along planes.
+{\bf Bounding Shapes}: Circle/Cubes that completely enclose associated object.
+%Slop
+%{\bf Box Intersection}
 
+\subsection*{Perspective}
 
+\subsection*{Scan Conversion}
 
+{\bf Bresenham Algorithm}: Uses integer arithmetic to draw lines.
+{\bf Midpoint-test} subdivision: Evaluate the midpoint between two points on a curve to determine if linear approximation of curve is decent. Doesn't always work, consider a straight line with a ``spike'' somewhere on it.
+{\bf Inside Triangle Test}: Draw pixel if center is in triangle.
+%{\bf Triangle Sweep-Line Algo}:
 
-
-
-
-
-\subsection*{Gradients}
-\(\frac{\partial \bf{y}}{\partial \bf{x}}\triangleq
-    \begin{bmatrix}
-    \frac{\partial y_1}{\partial x_1} & \dots & \frac{\partial y_m}{\partial x_1} \\
-    \vdots & \ddots & \vdots\\
-    \frac{\partial y_1}{\partial x_n} & \dots & \frac{\partial y_m}{\partial x_n}
-    \end{bmatrix},
-\)
-\(\frac{\partial (A{\bf x})}{\partial {\bf x}}=A^T, \frac{\partial ({\bf x}^TA)}{\partial {\bf x}}=A,\)\\
-\( \frac{\partial ({\bf x}^T{\bf x})}{\partial {\bf x}}=2{\bf x}, \frac{\partial ({\bf x}^TA{\bf x})}{\partial {\bf x}}=(A+A^T){\bf x}, \frac{\partial (trBA)}{\partial A}=B^T\)
 
 % You can even have references
 \rule{0.3\linewidth}{0.25pt}
