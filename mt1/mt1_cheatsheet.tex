@@ -134,7 +134,7 @@ Cone response is linear: \(n\Phi_1+\Phi_2 \implies nL_1+L_2\)\\
 Gamut of CIE 1931 (XYZ) primaries encompasses the whole horseshoe.\\
 \includegraphics[scale=0.4]{images/gamut}\\
 {\bf Subtractive Mixing}: Given any 3 primaries \(p_1,p_2,p_3\), match \(\Phi\) with \(W-(\alpha p_1 + \beta p_2 + \gamma p_3)\). Black is usually used to save ink.\\
-%Color Spaces: RGB, HSV: HueSaturationValue
+%Color Spaces: RGB, HSV=HueSaturationValue
 %Monitors map pixel values to intensity levels, but are not linear.
 %Monitor nonlinearity characterized by exponential function I=a^\gamma
 %I is monitor intensity, a is pixel value, and gamma is some tuned parameter
@@ -143,9 +143,9 @@ Gamut of CIE 1931 (XYZ) primaries encompasses the whole horseshoe.\\
 %Tone Mapping: Map one set of colors to another
 %Reflection: Some frequencies bounce off others absorb
 %Transmission: Some frequencies pass through, others reflect/absorb
-%Scattering: Interaction with small particles in medium, short wavelengths scatter.
-%Interference: Cancelation/Reinforcement between light waves
-%Iridescence: Interaction of light with small structures and thin transparent surfaces.
+{\bf Scattering}: Interaction with small particles in medium, short wavelengths scatter.\\
+{\bf Interference}: Cancelation/Reinforcement between light waves\\
+{\bf Iridescence}: Interaction of light with small structures and thin transparent surfaces.\\
 %Fluorescence: Emission of photon at another frequency
 %Black Body Radiation: Energy radiated by hot objects, emitted frequency is temperature dependent. Notion of "color temperature".
 %\(E(\lambda)\propto\frac{1}{\lambda^5}(\frac{1}{exp(hc/k\lambda T)-1}) \)
@@ -247,24 +247,14 @@ Composing rotations: \(q=q_1\cdot q_2\)\\
 \((ra)\times b = a\times(rb)=r(a\times b )\)\\
 \(a\times (b\times c)=b(a\cdot c) - c(a\cdot b)\)\\
 
-\subsection*{Gradients}
-\(\frac{\partial \bf{y}}{\partial \bf{x}}\triangleq
-    \begin{bmatrix}
-    \frac{\partial y_1}{\partial x_1} & \dots & \frac{\partial y_m}{\partial x_1} \\
-    \vdots & \ddots & \vdots\\
-    \frac{\partial y_1}{\partial x_n} & \dots & \frac{\partial y_m}{\partial x_n}
-    \end{bmatrix},
-\)
-\(\frac{\partial (A{\bf x})}{\partial {\bf x}}=A^T, \frac{\partial ({\bf x}^TA)}{\partial {\bf x}}=A,\)\\
-\( \frac{\partial ({\bf x}^T{\bf x})}{\partial {\bf x}}=2{\bf x}, \frac{\partial ({\bf x}^TA{\bf x})}{\partial {\bf x}}=(A+A^T){\bf x}, \frac{\partial (trBA)}{\partial A}=B^T\)
-
 \subsection*{Ray Tracing}
 \includegraphics[scale=0.5]{images/raytracer}\\
 {\bf Scan conversion}:  3D $ \rightarrow $ 2D  $ \rightarrow $ Image, Based on transforming geometry\\
 {\bf Raytracing}:  3D  $ \rightarrow $ Image, Geometric reasoning about light rays\\
+{\bf Distributed Raytracing}: Send multiple rays through each pixel (avg the results)
 {\bf Ray Equation}: $R(t) = E+t(P-E)$, $t \in [1...+\infty]$\\
 Through the eye at $t = 0$, At pixel center at $t = 1$\\
-{\bf Shadow Ray}: $R(t) = S + t(L-S), \, t \in [\epsilon ...1)$, prevents self shadowing\\ 
+{\bf Shadow Ray}: $R(t) = S + t(L-S), \, t \in [\epsilon ...1)$, where \(\epsilon\) is the shadow bias to prevent self shadowing\\ 
 {\bf Refracted Rays}:\\
 \includegraphics[scale=0.5]{images/snell}\\
 Snell's Law$\Large{\frac{n_i}{n_t}  = \frac{\sin(\theta_t)}{\sin(\theta_i)}}$\\
@@ -294,6 +284,40 @@ Solve for $\beta, \gamma$, and t\\
 %{\bf Box Intersection}
 
 \subsection*{Perspective}
+{\bf Canonical View Space}: \([-1,-1,-1]\) to \([+1,+1,+1]\) and always looking down -Z axis.
+{\bf Canonical to Screen}: Given by, \(\begin{bmatrix}
+\frac{n_x}{2} & 1 & \frac{n_x-1}{2} \\
+0 & \frac{-n_y}{2} & \frac{n_y-1}{2} \\
+0 & 0 & 1
+\end{bmatrix}\) where \(n_x\) pixels wide, \(n_y\) pixels tall.\\
+Projection occur onto a planar surface.\\
+Projection directions either converge to a point or are parallel (converge at infinity).\\
+{\bf Orthographic Projection Steps}:\\
+1) Translate center to origin\\
+2) Rotate ``view'' to -Z and ``up'' to +Y\\
+3) Center view volume\\
+4) Scale to canonical size\\
+{\bf Perspective Projection Steps}:\\
+1) Translate center to origin\\
+2) Rotate ``view'' to -Z and ``up'' to +Y\\
+3) Share center-line to -Z axis\\
+4) Perspective (undo)
+5) Center view volume\\
+6) Scale to canonical size\\
+Number of vanishing points depends on the scene\\
+Z ordering preserved where we care\\
+\includegraphics[scale=0.6]{images/perspective}\\
+{\bf Perspective Matrix}: \(\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & \frac{i+f}{i} & f \\
+0 & 0 & \frac{-1}{i} & 1
+\end{bmatrix}\) where \(-i\) \& \(-f\) is distance to the near \& far clipping planes, respectively\\
+{\bf Vanishing Points}: All lines in the same direction converge to the same point in the image plane.\\
+Every point in the plane is a vanishing point for some set of lines.\\
+Lines parallel to image plane vanish at infinity.\\
+{\bf Ray Picking}: Pick object by picking point on screen.
+
 
 \subsection*{Scan Conversion}
 
