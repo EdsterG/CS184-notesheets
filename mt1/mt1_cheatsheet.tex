@@ -191,15 +191,6 @@ In general matricies are associative, but not commutative.\\
 {\bf Homogeneous Coordinates}: Append 1/0 at the end of the direction/point vectors. Used for translations and projections.\\
 Normals do not transform normally. Given transformation M, \(n_{new}=(M^{-1})^Tn_{old}\)
 
-
-
-
-
-
-
-
-
-
 \subsection*{Gradients}
 \(\frac{\partial \bf{y}}{\partial \bf{x}}\triangleq
     \begin{bmatrix}
@@ -210,6 +201,15 @@ Normals do not transform normally. Given transformation M, \(n_{new}=(M^{-1})^Tn
 \)
 \(\frac{\partial (A{\bf x})}{\partial {\bf x}}=A^T, \frac{\partial ({\bf x}^TA)}{\partial {\bf x}}=A,\)\\
 \( \frac{\partial ({\bf x}^T{\bf x})}{\partial {\bf x}}=2{\bf x}, \frac{\partial ({\bf x}^TA{\bf x})}{\partial {\bf x}}=(A+A^T){\bf x}, \frac{\partial (trBA)}{\partial A}=B^T\)
+
+\subsection*{Ray Tracing}
+\includegraphics[scale=0.5]{images/raytracer}\\
+{\bf Scan conversion}:  3D $ \rightarrow $ 2D  $ \rightarrow $ Image, Based on transforming geometry\\
+{\bf Raytracing}:  3D  $ \rightarrow $ Image, Geometric reasoning about light rays\\
+{\bf Ray Equation}: $R(t) = E+t(P-E)$, $t \in [1...+\infty]$\\
+Through the eye at $t = 0$, At pixel center at $t = 1$\\
+{\bf Shadow Ray}: $R(t) = S + t(L-S), \, t \in [\epsilon ...1)$, prevents self shadowing\\ 
+{\bf Refracted Rays}: $\frac{n_i}{n_t}$ 
 
 % You can even have references
 \rule{0.3\linewidth}{0.25pt}
