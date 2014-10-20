@@ -247,6 +247,46 @@ Composing rotations: \(q=q_1\cdot q_2\)\\
 \((ra)\times b = a\times(rb)=r(a\times b )\)\\
 \(a\times (b\times c)=b(a\cdot c) - c(a\cdot b)\)\\
 
+\subsection*{Gradients}
+\(\frac{\partial \bf{y}}{\partial \bf{x}}\triangleq
+    \begin{bmatrix}
+    \frac{\partial y_1}{\partial x_1} & \dots & \frac{\partial y_m}{\partial x_1} \\
+    \vdots & \ddots & \vdots\\
+    \frac{\partial y_1}{\partial x_n} & \dots & \frac{\partial y_m}{\partial x_n}
+    \end{bmatrix},
+\)
+\(\frac{\partial (A{\bf x})}{\partial {\bf x}}=A^T, \frac{\partial ({\bf x}^TA)}{\partial {\bf x}}=A,\)\\
+\( \frac{\partial ({\bf x}^T{\bf x})}{\partial {\bf x}}=2{\bf x}, \frac{\partial ({\bf x}^TA{\bf x})}{\partial {\bf x}}=(A+A^T){\bf x}, \frac{\partial (trBA)}{\partial A}=B^T\)
+
+\subsection*{Ray Tracing}
+\includegraphics[scale=0.5]{images/raytracer}\\
+{\bf Scan conversion}:  3D $ \rightarrow $ 2D  $ \rightarrow $ Image, Based on transforming geometry\\
+{\bf Raytracing}:  3D  $ \rightarrow $ Image, Geometric reasoning about light rays\\
+{\bf Ray Equation}: $R(t) = E+t(P-E)$, $t \in [1...+\infty]$\\
+Through the eye at $t = 0$, At pixel center at $t = 1$\\
+{\bf Shadow Ray}: $R(t) = S + t(L-S), \, t \in [\epsilon ...1)$, prevents self shadowing\\ 
+{\bf Refracted Rays}:\\
+\includegraphics[scale=0.5]{images/snell}\\
+Snell's Law$\Large{\frac{n_i}{n_t}  = \frac{\sin(\theta_t)}{\sin(\theta_i)}}$\\
+We have total internal when $\sin(\theta_t) > 1$\\
+{\bf Distributed Ray Tracer}: Use multiple rays for reflection and refraction, quasi-random directions, BRDF for weights\\
+{\bf Soft Shadows}: \\
+\includegraphics[scale=1.0]{images/softshadow}\\
+{\bf Ray -vs- Sphere Test}:\\
+Implicit equation for sphere: $|X-C| ^ 2 - r^2  = 0$\\
+Combine with ray equation:\\
+$|r(t)-C| ^ 2 - r^2  = 0$\\
+$| A+tD-C| ^ 2 - r^2  = 0$\\
+\includegraphics[scale=1.0]{images/raycircle}\\
+{\bf Ray -vs- Triangle Test}:\\
+Implicit equation for sphere: $X(\beta, \gamma) = V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1)$\\
+Combine with ray equation:\\
+$ V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1) = A+tD$\\
+Solve for $\beta, \gamma$, and t\\
+3 equations 3 unknowns, Beware divide by near-zero, Check range\\
+\includegraphics[scale=1.0]{images/raytri}
+
+
 \subsection*{Acceleration Data Structures}
 {\bf Binary Space Partition Tree}: Split space along planes.
 {\bf Bounding Shapes}: Circle/Cubes that completely enclose associated object.
