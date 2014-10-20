@@ -121,19 +121,19 @@ Rods:\\
 -Contribute to (bluish) color perception
 \end{multicols}
 %Rod response curve is between medium and short.
-Trichromaticity: eye records color by 3 measurements.\\
+{\bf Trichromaticity}: eye records color by 3 measurements.\\
 \(L = \int\Phi(\lambda)L(\lambda)d\lambda\), 
 \(M = \int\Phi(\lambda)M(\lambda)d\lambda\), 
 \(S = \int\Phi(\lambda)S(\lambda)d\lambda\)\\
-Metamers: Different light spectrums produce same cone response\\
+{\bf Metamers}: Different light spectrums produce same cone response\\
 Cone response is linear: \(n\Phi_1+\Phi_2 \implies nL_1+L_2\)\\
-Additive Mixing: Given any 3 primaries \(p_1,p_2,p_3\), match \(\Phi\) with \(\alpha p_1 + \beta p_2 + \gamma p_3\)\\
+{\bf Additive Mixing}: Given any 3 primaries \(p_1,p_2,p_3\), match \(\Phi\) with \(\alpha p_1 + \beta p_2 + \gamma p_3\)\\
 %Color matching functions?
 %Imaginary set of primaries with positive values, XYZ
-{\b Gamut}: convex full of the primary chomaticities\\
+{\bf Gamut}: convex full of the primary chomaticities\\
 Gamut of CIE 1931 (XYZ) primaries encompasses the whole horseshoe.\\
 \includegraphics[scale=0.4]{images/gamut}\\
-Subtractive Mixing: Given any 3 primaries \(p_1,p_2,p_3\), match \(\Phi\) with \(W-(\alpha p_1 + \beta p_2 + \gamma p_3)\). Black is usually used to save ink.\\
+{\bf Subtractive Mixing}: Given any 3 primaries \(p_1,p_2,p_3\), match \(\Phi\) with \(W-(\alpha p_1 + \beta p_2 + \gamma p_3)\). Black is usually used to save ink.\\
 %Color Spaces: RGB, HSV: HueSaturationValue
 %Monitors map pixel values to intensity levels, but are not linear.
 %Monitor nonlinearity characterized by exponential function I=a^\gamma
@@ -182,14 +182,67 @@ Metal specular reflects its color, plastic specular reflects as white.\\
 %Swirls are non-linear geometric.
 %Edge finding is color space transform.
 %{\bf Instancing}: Reuse geometric description, with different transform.
-{\bf Rotations}: Preserve lengths and distance to origin, are orthonormal, det(R)=1, positive\(\rightarrow\)counter-clockwise. (In 2D ONLY, they commute)\\
+%Composing two linear functions gives a linear function. We transform polygons by transforming vertices. Interior is defined by interpolation of vertices.
+{\bf Rotations}: Preserve lengths and distance to origin, are orthonormal, det(R)=1, positive\(\rightarrow\)counter-clockwise. (In 2D ONLY, pure rotations commute)\\
 In general matricies are associative, but not commutative.\\
 {\bf Scales}: Diagonal matricies, negative values flit, axis aligned scales\\
 {\bf Shears}: Composition of rotations and scales\\
 {\bf SVD}: Any matrix can be writen as \(A=QSR^T\) where Q and R orthonormal and S diagonal.\\
 {\bf Polar Decomposition}: \(A=PRSR^T\) where \(P=QR^T\)\\
 {\bf Homogeneous Coordinates}: Append 1/0 at the end of the direction/point vectors. Used for translations and projections.\\
-Normals do not transform normally. Given transformation M, \(n_{new}=(M^{-1})^Tn_{old}\)
+Normals do not transform normally. Given transformation M, \(n_{new}=(M^{-1})^Tn_{old}\)\\
+\(R_x = 
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos(\theta) & -\sin(\theta)\\
+0 & \sin(\theta) & \cos(\theta)
+\end{bmatrix}
+R_y = 
+\begin{bmatrix}
+\cos(\theta) & 0 & \sin(\theta) \\
+0 & 1 & 0\\
+-\sin(\theta) & 0 & \cos(\theta)
+\end{bmatrix}\)
+\(R_z = 
+\begin{bmatrix}
+\cos(\theta) & -\sin(\theta) & 0 \\
+\sin(\theta) & \cos(\theta) & 0\\
+0 & 0 & 1
+\end{bmatrix}
+\)\\
+{\bf Euler Angles}: Allow tumbling, Non-unique, Gimbal-lock, built from axis-aligned matricies \(R=R_zR_yR_x=rot(x,y,z)\)
+{\bf Exponential Maps}: Encode the rotation-axis and rotation amount as a vector \(\hat{r}\) where \(\theta = |\hat{r}|\). Allows tumbling, no gimbal-lock, singularity on shells at 2\(\pi\)\\
+%TODO: Replace the picture below, with formulas
+\includegraphics[scale=0.5]{images/exponential_map}\\
+{\bf Rodriguez Formula}: \(x^{'}=\hat{r}(\hat{r}\cdot x)+\sin(\theta)(\hat{r}\times x)-\cos(\theta)(\hat{r}\times (\hat{r}\times x))\)\\
+\((\hat{r}\times)=
+\begin{bmatrix}
+0 & -\hat{r}_z & \hat{r}_y \\
+\hat{r}_z & 0 & -\hat{r}_x \\
+-\hat{r}_y & \hat{r}_x & 0
+\end{bmatrix}
+\)\\
+\(x^{'}=\lim_{n \to \infty}(I+\frac{\theta(\hat{r}\times)}{n})^n x = e^{(\hat{r}\times)\theta}x\)\\
+{\bf Quaternions}: No tumbling, no gimbal-lock, surface of a 3-sphere in 4D \(||r||=1\), ``double unique'' since negating the quaternion doesn't change it.\\
+\(q=iz_1+jz_2+kz_3+s=({\bf z},s)\)\\
+\(i^2=j^2=k^2=-1\)\\
+\(ij=k, jk=i, ki=j, ji=-k, ...\)\\
+\(q^{*}=({\bf -z},s)\)\\
+\(||q||^2={{\bf z}\cdot {\bf z}}+s^2=q\cdot q^{*}\)\\
+\(qp=({\bf z}_qs_p+{\bf z}_ps_q+{\bf z}_p\times {\bf z}_q,s_ps_q-{\bf z}_p\cdot {\bf z}_q)\)\\
+Vectors as quat: \((\hat{v},0)\)\\
+Rotations as quat: \((\hat{r}\sin\frac{\theta}{2},\cos\frac{\theta}{2})\)\\
+Rotating a vector: \(x^{'}=q\cdot x\cdot q^{*}\)\\
+Composing rotations: \(q=q_1\cdot q_2\)\\
+{\bf Rotation Matricies}: One real eigenvalue, two complex eigenvalues, real axis is axis of rotation, \(\theta=cos^{-1}(\frac{Tr(R)-1}{2})\).
+
+
+
+
+
+
+
+
 
 \subsection*{Gradients}
 \(\frac{\partial \bf{y}}{\partial \bf{x}}\triangleq
