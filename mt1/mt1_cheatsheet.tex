@@ -324,7 +324,28 @@ Lines parallel to image plane vanish at infinity.\\
 {\bf Bresenham Algorithm}: Uses integer arithmetic to draw lines.
 {\bf Midpoint-test} subdivision: Evaluate the midpoint between two points on a curve to determine if linear approximation of curve is decent. Doesn't always work, consider a straight line with a ``spike'' somewhere on it.
 {\bf Inside Triangle Test}: Draw pixel if center is in triangle.
+{\bf Inside Polygon Rules}: Odd-Parity Rule: Send ray in any direction, if an odd number of lines was crossed, then inside of the polygon.
 %{\bf Triangle Sweep-Line Algo}:
+
+\subsection*{Clipping}
+
+{\bf Sutherland-Hodgman Clipping}: Clip each window boundary one at a time.
+{\bf Z-Buffers}: Transparency requires partial soring.
+{\bf A-Buffers}: Store sorted list at each pixel, draw opaque first, then transparent. Good for antialiasing.
+{\bf Scan-line}: Use z-buffer to store depth
+
+\subsection*{Textures}
+
+{\bf Texture Coordinates}: Assign coordinate to each vertex, use linear interpolation and correct for distortion.
+{\bf MIP Map}: Pre-compute filtered version, with decreasing level of detail.
+{\bf Procedural Texture}: Generate texture based on some function.
+{\bf Bump Mapping}: Add offset to normal vector. Doesn't change silhouette, doesn't explicitly change geometry.
+{\bf Displacement Map}: Moves geometry based on texture map.
+{\bf Environment Map}: Allow crude reflections, treat object as infinitesimal small (reflection only based on sufrace normal). Errors hard to notice in non-flat objects.
+{\bf Shadow Map}: Pre-render scene from light perspective (only z-buffer). Then render scene from camera.
+{\bf Deep Shadow Map}: Account for object that partially occlude light.
+
+
 
 
 % You can even have references
