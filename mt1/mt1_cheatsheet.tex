@@ -345,6 +345,20 @@ Lines parallel to image plane vanish at infinity.\\
 {\bf Shadow Map}: Pre-render scene from light perspective (only z-buffer). Then render scene from camera.
 {\bf Deep Shadow Map}: Account for object that partially occlude light.
 
+\subsection*{Sufraces}
+
+{\bf Discretization}: Arbitrary curves have uncountable number of parameters. Instead we pick some bases functions, and represent the curve as a vector of weights.
+{\bf Cubic Hermite}: Specified by $x(0)=c_0$, $x(1)=\sum c_i$, $x'(0)=c_1$, $x'(1)=\sum ic_i$. A point on the curve is given by $x(u)=P^3B_Hp$, where $P^3$ is the polynomial basis, $B_H$ is the Hermite basis, and $p$ contains the control points. Cubic Hermite can be constructed for any odd degree, just need to have control points for $(d-1)/2$ derivatives at end points.
+\includegraphics[scale=0.22]{images/hermite}\\
+{\bf Cubic Bezier}: Like Hermite, but specify tangents indirectly. $x_0=p_0$, $x_1=p_3$, $x'_0=3(p_1-p_0)$, $x'_1=3(p_3-p_3)$
+\includegraphics[scale=0.20]{images/bezier}\\
+{\bf Changing Basis}: $p_Z=B_Z^{-1}B_Hp_H$
+{\bf Convex Hull}: All points inside convex hull if $\sum b_i(u)=1, b_i(u)\ge 0, \forall u\in \Omega$
+{\bf Invariance}: Bezier basis invariant for affine transforms, NOT invariant for perspective transforms. NURBS are invariant for perspective transforms.
+{\bf Tensor-Product Surfaces}: Replace control points of curve with other curves. $x(u,v)=\sum p_{ij}b_{ij}(u,v)$
+{\bf NURBS} Nonuniform Rational B-Splines. It's just B-Splines with homogeneous coordinates.
+\includegraphics[scale=0.20]{images/bspline}\\
+{\bf Catmull-Clark}: Generalizes B-Spline subdivision. Surface is fully $C^2$ everywhere except extraordinary points where it's at least $C^1$.
 
 
 
