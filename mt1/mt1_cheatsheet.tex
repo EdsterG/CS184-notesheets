@@ -269,7 +269,7 @@ $|r(t)-C| ^ 2 - r^2  = 0$\\
 $| A+tD-C| ^ 2 - r^2  = 0$\\
 \includegraphics[scale=1.0]{images/raycircle}\\
 {\bf Ray -vs- Triangle Test}:\\
-Implicit equation for sphere: $X(\beta, \gamma) = V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1)$\\
+Implicit equation for triangle: $X(\beta, \gamma) = V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1)$\\
 Combine with ray equation:\\
 $ V_1 + \beta(V_2 - V_1)  + \gamma(V_3 - V_1) = A+tD$\\
 Solve for $\beta, \gamma$, and t\\
@@ -326,6 +326,21 @@ Lines parallel to image plane vanish at infinity.\\
 {\bf Inside Triangle Test}: Draw pixel if center is in triangle.
 {\bf Inside Polygon Rules}: Odd-Parity Rule: Send ray in any direction, if an odd number of lines was crossed, then inside of the polygon.
 %{\bf Triangle Sweep-Line Algo}:
+\section{Equations}
+\subsection*{Sphere}
+Implicit: $(x-x_c)^2 + (y-y_c)^2 + (z-z_c)^2 = r^2$\\ 
+Parametric: $x = r sin \phi cos \theta, y = -r cos \phi,z = -r sin \phi sin \theta$\\
+where $ 0 \leq \theta \leq  2\pi, 0 \leq \phi \leq \pi$
+\subsection*{Plane}
+Implicit: $ax + by + cz + d = 0$ or $ (p-a) \cdot n = 0 $\\
+also $(p-a)\cdot((b-a)\times(c-a)) = 0$\\
+Parametric: $f(u,v)=A+(B-A)u+(C-A)v$
+\subsection*{Line}
+Implicit: $n_1 \cdot (p-q) + n_2 \cdot (p-q) = 0$\\
+Parametric: $f(t)= p_0 - vt$
+\subsection*{Circle}
+Implicit: $(x-x_c)^2 + (y-y_c)^2 = r^2$\\ 
+Parametric: $x = r cos(t), y = r sin(t)$
 
 \subsection*{Clipping}
 
